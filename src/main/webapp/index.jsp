@@ -155,7 +155,7 @@
                 </div>
                 <span>Chicken</span>
             </a>
-            <a href="dishes" class="category-item">
+            <a href="dishes.jsp" class="category-item">
                 <div class="category-circle" style="display: flex; align-items: center; justify-content: center; background: #fff; border: 1.5px dashed var(--primary-color);">
                     <i class="fa-solid fa-arrow-right-long" style="font-size: 28px; color: var(--primary-color);"></i>
                 </div>

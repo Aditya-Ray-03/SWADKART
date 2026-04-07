@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.List, com.swadkart.model.MenuItem, com.swadkart.model.User, com.swadkart.dao.AddressDao, com.swadkart.dao.impl.AddressDaoImpl, com.swadkart.dao.OrderDao, com.swadkart.dao.impl.OrderDaoImpl, com.swadkart.model.Address, com.swadkart.model.Order, com.swadkart.model.CartItem, com.swadkart.dao.CartDao, com.swadkart.dao.impl.CartDaoImpl" %>
+<%@ page import="com.swadkart.model.User, com.swadkart.dao.AddressDao, com.swadkart.dao.impl.AddressDaoImpl, com.swadkart.dao.OrderDao, com.swadkart.dao.impl.OrderDaoImpl, com.swadkart.model.Address, com.swadkart.model.Order, com.swadkart.model.CartItem, com.swadkart.dao.CartDao, com.swadkart.dao.impl.CartDaoImpl, java.util.List, java.util.Arrays" %>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search Results - SwadKart</title>
+    <title>All Cravings - SwadKart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
     <style>
         .search-hero {
@@ -56,37 +55,25 @@
             font-weight: 600;
             font-size: 16px;
         }
-        .search-highlight {
-            color: var(--primary-color);
-            font-weight: 800;
+
+        /* Large Grid specifically for categories */
+        .all-cravings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 30px 20px;
+            margin-bottom: 60px;
+            justify-items: center;
         }
         
-        /* Unified Search Results Grid */
-        .search-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin-bottom: 60px;
-        }
-
-        .filter-bar {
+        .category-item {
+            text-decoration: none;
             display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s;
         }
-        .filter-btn {
-            padding: 8px 20px;
-            border: 2px solid var(--primary-color);
-            background: transparent;
-            color: var(--primary-color);
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-        }
-        .filter-btn:hover, .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
+        .category-item:hover {
+            transform: translateY(-5px);
         }
     </style>
 </head>
@@ -108,12 +95,7 @@
                 OrderDao orderDao = new OrderDaoImpl();
                 CartDao cartDao = new CartDaoImpl();
                 
-                List<Address> addresses = (user != null) ? addressDao.getAddressesByUserId(user.getUserId()) : null;
-                List<Order> orders = (user != null) ? orderDao.getOrdersByUserId(user.getUserId()) : null;
                 List<CartItem> cartItems = (user != null) ? cartDao.getCartItems(user.getUserId()) : new java.util.ArrayList<>();
-                
-                double cartTotal = 0;
-                for(CartItem ci : cartItems) cartTotal += (ci.getPrice() * ci.getQuantity());
 
                 if (user != null) { 
             %>
@@ -127,13 +109,12 @@
                     </div>
                 </div>
             <% } else { %>
-                <a href="login" class="floating-btn">Sign Up <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="login.jsp" class="floating-btn">Sign Up <i class="fa-solid fa-arrow-right"></i></a>
             <% } %>
         </div>
     </header>
 
     <script>
-        // OPTIMIZED HEADER SCROLL LOGIC
         let ticking = false;
         function updateHeader() {
             const header = document.getElementById('mainHeader');
@@ -151,155 +132,50 @@
                 ticking = true;
             }
         });
-        const isLoggedIn = <%= user != null ? "true" : "false" %>;
     </script>
 
     <!-- DISHES HERO SECTION -->
     <div class="search-hero">
         <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1920&q=80" alt="Dishes" class="search-hero-img">
         <div class="search-hero-content">
-            <h1 class="search-hero-title">Explore Delicious Dishes</h1>
+            <h1 class="search-hero-title">What are you craving?</h1>
             <div class="search-hero-subtitle">
-                Discover our hand-picked selection of premium meals
+                Explore over 50 variations of delicious food!
             </div>
         </div>
     </div>
 
     <div class="container">
-        <%
-            List<MenuItem> list = (List<MenuItem>) request.getAttribute("searchResults");
-
-            if (list != null && !list.isEmpty()) {
-        %>
-            <!-- SEARCH RESULTS FILTER BAR -->
-            <div class="filter-bar" id="searchFilterBar" style="justify-content: center; margin: 30px 0;">
-                <button class="filter-btn active" onclick="filterMenu('ALL', this)">All Items</button>
-                <button class="filter-btn" onclick="filterMenu('VEG', this)">Veg Only</button>
-                <button class="filter-btn" onclick="filterMenu('NON_VEG', this)">Non-Veg Only</button>
-            </div>
-
-            <div class="search-grid">
-
+        <div class="all-cravings-grid">
             <%
+                List<String> categories = Arrays.asList(
+                    "Biryani", "Pizza", "Burger", "Indian", "Sushi", "Desserts", "Pasta", "Chicken", 
+                    "Salad", "Sandwich", "Thali", "Noodles", "Kebab", "Milkshake", "Dosa", "Wrap", 
+                    "Paneer", "Roll", "Momos", "Samosa", "Chaat", "Idli", "Vada", "Paratha", "Kulcha", 
+                    "Naan", "Rice", "Roti", "Dal", "Curry", "Soup", "Starters", "Breads", "Ice Cream", 
+                    "Cake", "Pastry", "Waffle", "Pancake", "Coffee", "Tea", "Juice", "Mocktail", 
+                    "Smoothie", "Fries", "Nachos", "Tacos", "Burrito", "Quesadilla", "Steak", 
+                    "Seafood", "Sizzler", "Dimsum", "Spring Roll", "Manchurian"
+                );
+                
                 int imgIdx = 1;
-                for (MenuItem item : list) {
-                    String foodType = item.getFoodType() != null ? item.getFoodType() : "VEG";
-                    String itemName = item.getName() != null ? item.getName().toUpperCase() : "";
-                    
-                    // Fail-Safe Name-Aware logic: also check name for "VEG", "SALAD", "PANEER"
-                    boolean isVeg = (item.getFoodType() == null || item.getFoodType().trim().isEmpty() || 
-                                     item.getFoodType().toUpperCase().contains("VEG") ||
-                                     itemName.contains("VEG") || itemName.contains("SALAD") || itemName.contains("PANEER"));
-                    
-                    String typeClass = isVeg ? "veg" : "non-veg";
-                    // For filtering, if name-aware says it's veg, force "VEG" type
-                    String filterType = isVeg ? "VEG" : foodType.toUpperCase();
-                    
-                    String itemImg = item.getImageUrl();
-                    if (itemImg == null || itemImg.trim().isEmpty()) {
-                        itemImg = "images/menuItem/menu_img" + imgIdx + ".jpg";
-                        imgIdx = (imgIdx % 10) + 1;
-                    }
+                for (String category : categories) {
+                    String itemImg = "images/menuItem/menu_img" + imgIdx + ".jpg";
+                    // Cycle through 10 images smoothly
+                    imgIdx = (imgIdx % 10) + 1;
             %>
-                <!-- PREMIUM MENU ITEM CARD -->
-                <div class="menu-card menu-item" data-type="<%= filterType %>" style="display: flex; flex-direction: column;">
-                    <div class="menu-img-wrapper" style="position: relative; height: 180px; overflow: hidden; border-radius: 15px;">
-                        <img src="<%=itemImg%>" alt="<%=item.getName()%>" class="menu-img" style="width:100%; height:100%; object-fit:cover; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);">
-                        <div style="position: absolute; top: 10px; right: 10px;">
-                            <% if (!item.isAvailable()) { %>
-                                <span class="badge closed" style="font-size: 10px;">Sold Out</span>
-                            <% } %>
-                        </div>
+                <!-- INDIVIDUAL CATEGORY CIRCLE -->
+                <a href="searchMenu?query=<%= category %>" class="category-item">
+                    <div class="category-circle" style="width: 100px; height: 100px; border-radius: 50%; overflow: hidden; margin-bottom: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 3px solid white;">
+                        <img src="<%= itemImg %>" alt="<%= category %>" style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
-                    <div class="menu-content" style="padding: 18px; flex-grow: 1; display:flex; flex-direction: column;">
-                        <div class="menu-header">
-                            <h3 class="menu-title" style="font-size: 18px;">
-                                <span class="food-icon <%=typeClass%>"></span>
-                                <%=item.getName()%>
-                            </h3>
-                        </div>
-                        <p class="menu-desc" style="font-size: 13px; color: #777; margin: 10px 0; height: 3.2em; overflow: hidden;"><%=item.getDescription() != null ? item.getDescription() : "Delicious and freshly prepared."%></p>
-                        
-                        <div class="menu-footer" style="margin-top: auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f0; padding-top: 15px;">
-                            <div class="menu-price" style="font-weight: 800; color: var(--text-dark); font-size: 18px;">&#8377;<%=item.getPrice()%></div>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <a href="menu?restaurantId=<%=item.getRestaurantId()%>" title="View Restaurant" style="color: var(--primary-color); font-size: 18px;"><i class="fa-solid fa-store"></i></a>
-                                <button type="button" class="btn-add" 
-                                        onclick="addToCartAjax('<%=item.getItemId()%>', '<%=item.getPrice()%>', '<%=item.getRestaurantId()%>')"
-                                        <%= !item.isAvailable() ? "disabled" : "" %>
-                                        style="padding: 8px 18px; font-size: 13px;">
-                                    <%= item.isAvailable() ? "Add +" : "Off" %>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <span style="font-weight: 700; color: var(--text-dark); font-size: 15px;"><%= category %></span>
+                </a>
             <% } %>
-            </div>
-        <% } else { %>
-            <div class="no-results" style="text-align: center; padding: 80px 20px;">
-                <i class="fa-solid fa-magnifying-glass-location" style="font-size: 70px; color: #ddd; margin-bottom: 25px;"></i>
-                <h2 style="font-size: 28px; color: var(--text-dark); font-weight: 800;">No dishes available</h2>
-                <p style="color: #888; font-size: 16px; margin-top: 10px;">Check back later for exciting new menu additions!</p>
-                <div style="margin-top: 35px; display: flex; gap: 15px; justify-content: center;">
-                    <a href="restaurants" class="btn-primary" style="display: inline-flex; padding: 12px 25px;">Explore All Restaurants</a>
-                    <a href="index.jsp" class="btn-secondary" style="display: inline-flex; padding: 12px 25px; background: #eee; color: #333; text-decoration: none; border-radius: 12px; font-weight: 700;">Back to Home</a>
-                </div>
-        <% } %>
+        </div>
     </div>
 
-    <!-- SCRIPT TO FILTER -->
-    <script>
-        function filterMenu(type, btnElement) {
-            // Update active button state
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-            btnElement.classList.add('active');
-
-            // Filter items
-            const items = document.querySelectorAll('.menu-item');
-            items.forEach(item => {
-                const itemType = item.getAttribute('data-type').replace('-', '_');
-                const filterType = type.replace('-', '_');
-                
-                if (filterType === 'ALL' || itemType === filterType) {
-                    item.style.display = 'flex';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        }
-    </script>
     <%@ include file="footer.jsp" %>
     
-    <script>
-        function addToCartAjax(itemId, price, restaurantId) {
-            if (!isLoggedIn) {
-                alert("Please login first to add items to cart.");
-                window.location.href = "login";
-                return;
-            }
-            fetch('cart', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-Requested-With': 'XMLHttpRequest' },
-                body: 'action=add&menuItemId=' + itemId + '&price=' + price + '&restaurantId=' + restaurantId
-            })
-            .then(r => r.json())
-            .then(data => {
-                if (data.success) {
-                    const cartCount = document.getElementById('navCartCount');
-                    const cartPill = document.getElementById('cartPill');
-                    
-                    if (cartCount) cartCount.innerText = data.cartCount;
-                    
-                    // Trigger Pulse Animation
-                    if (cartPill) {
-                        cartPill.classList.remove('cart-pulse');
-                        void cartPill.offsetWidth; // Trigger reflow
-                        cartPill.classList.add('cart-pulse');
-                    }
-                }
-            });
-        }
-    </script>
 </body>
 </html>
