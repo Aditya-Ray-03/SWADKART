@@ -810,7 +810,7 @@ body {
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 25px;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 2px solid #fefafa;
     display: inline-block;
     padding-bottom: 5px;
 }
@@ -837,7 +837,11 @@ body {
 .customer-links { display: flex; flex-wrap: wrap; gap: 15px 25px; list-style: none; padding: 0; }
 .customer-links li { margin-bottom: 0; }
 
-.rules { font-size: 13px; color: #888; }
+.rules {
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+}
 .rules a { color: #888; font-weight: 600; text-decoration: none; transition: 0.3s; display: inline-block; white-space: nowrap; }
 .rules a:hover { color: white; border-bottom: 1px solid white; }
 
