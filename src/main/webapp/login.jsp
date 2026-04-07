@@ -189,14 +189,7 @@
                     <p style="color: #64748b; margin-top: 5px;">Join thousands of food lovers today</p>
                 </div>
                 
-                <div class="social-login">
-                    <button class="btn-social">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" width="18" height="18">
-                        Continue with Google
-                    </button>
-                </div>
-
-                <div class="divider">or continue with mobile</div>
+                <div class="divider">continue with mobile</div>
 
                 <% 
                     String error = (String) request.getAttribute("errorMessage");
