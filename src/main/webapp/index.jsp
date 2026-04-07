@@ -155,6 +155,12 @@
                 </div>
                 <span>Chicken</span>
             </a>
+            <a href="searchMenu?query=Special" class="category-item">
+                <div class="category-circle" style="display: flex; align-items: center; justify-content: center; background: #fff; border: 1.5px dashed var(--primary-color);">
+                    <i class="fa-solid fa-arrow-right-long" style="font-size: 28px; color: var(--primary-color);"></i>
+                </div>
+                <span style="color: var(--primary-color); font-weight: 700;">View More</span>
+            </a>
         </div>
     </div>
 
