@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://i.imgur.com/your-logo.png" alt="SwadKart Logo" width="200" />
+  <img src="docs/logo.png" alt="SwadKart Logo" width="250" />
   <h1>SwadKart - Premium Food Delivery Platform</h1>
   <p>
     A high-performance, full-stack food delivery web application built with Java Servlets, JSP, and Vanilla CSS. 
@@ -74,7 +74,7 @@ Set the following variables on your operating system before launching your serve
 - `DB_PASS` - Your MySQL password
 
 ### Running the Application
-1. Clone the repository: `git clone https://github.com/YourUsername/SwadKart.git`
+1. Clone the repository: `git clone https://github.com/Aditya-Ray-03/SWADKART.git`
 2. Open the project in your preferred IDE.
 3. Add the Apache Tomcat server to your IDE run configurations.
 4. Add the `mysql-connector-java.jar` to your application's `/WEB-INF/lib` folder.
@@ -84,10 +84,7 @@ Set the following variables on your operating system before launching your serve
 ---
 
 ## 📸 Screenshots
-*(Insert images of your UI here. E.g.,)*
-| Home & Discovery | Menu & Ordering | Checkout Flow |
-| :---: | :---: | :---: |
-| <img src="https://via.placeholder.com/250x500.png?text=Home+Page" width="250"/> | <img src="https://via.placeholder.com/250x500.png?text=Menu+Page" width="250"/> | <img src="https://via.placeholder.com/250x500.png?text=Checkout" width="250"/> |
+> *Currently setting up dynamic screenshots for the preview! You can run the application locally following the steps above to experience the beautiful interface first-hand.*
 
 ---
 
