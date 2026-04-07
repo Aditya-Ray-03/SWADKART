@@ -65,6 +65,25 @@ public class MenuDaoImpl implements MenuDao {
     }
 
     @Override
+    public List<MenuItem> getAllMenuItems(int limit) {
+        List<MenuItem> list = new ArrayList<>();
+        String query = "SELECT * FROM menu_items WHERE is_available = TRUE ORDER BY RAND() LIMIT ?";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, limit);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    MenuItem item = mapResultSetToMenuItem(rs);
+                    list.add(item);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
     public MenuItem getMenuItemById(long itemId) {
         String query = "SELECT * FROM menu_items WHERE item_id = ?";
         try (Connection con = DBConnection.getConnection();

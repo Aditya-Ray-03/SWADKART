@@ -14,6 +14,9 @@ public interface MenuDao {
     // New global search method
     List<MenuItem> getMenuItemsByKeyword(String keyword);
 
+    // Global fetch for all dishes
+    List<MenuItem> getAllMenuItems(int limit);
+
     MenuItem getMenuItemById(long itemId);
 
 }
