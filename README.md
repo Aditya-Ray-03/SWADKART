@@ -38,7 +38,7 @@ SwadKart is an enterprise-grade food delivery application inspired by industry l
 - **Web Technologies**: Java Servlets, JavaServer Pages (JSP)
 - **Database**: MySQL Relational Database
 - **Design Patterns**: MVC, DAO (Data Access Object), Singleton (for DB Connection)
-- **Server**: Apache Tomcat 9/10
+- **Server**: Apache Tomcat 10.0
 
 ### Frontend
 - **Structure**: HTML5, JSP Scriptlets
@@ -53,7 +53,7 @@ To run this project locally, follow these steps closely.
 
 ### Prerequisites
 - [Java Development Kit (JDK) 8 or higher](https://www.oracle.com/java/technologies/downloads/)
-- [Apache Tomcat 9.0+](https://tomcat.apache.org/)
+- [Apache Tomcat 10.0+](https://tomcat.apache.org/)
 - [MySQL Server](https://dev.mysql.com/downloads/installer/)
 - IDE: Eclipse EE, IntelliJ IDEA Ultimate, or VS Code (with Java extensions)
 
@@ -92,7 +92,7 @@ Set the following variables on your operating system before launching your serve
 ---
 
 ## 📖 Author
-**Aditya (Tapan)** 
+**Aditya Ray** 
 - Project engineered to demonstrate full-stack capabilities, mastery in MVC architecture, and commitment to premium UI/UX standards.
 
 ## 📄 License
